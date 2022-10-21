@@ -52,7 +52,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Hello</h1>
-        <p>This is Ricks DevOps AWS Lab - RELEASE 21Oct2022 13:28
+        <p>This is Ricks DevOps AWS Lab - RELEASE 21Oct2022 14:16 (Docker Tomcat Test)
 </p>
         <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
         <p><a class="btn btn-primary btn-lg" role="button">Success!! more &raquo;</a></p>
