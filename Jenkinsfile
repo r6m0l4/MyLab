@@ -5,12 +5,6 @@ pipeline{
         maven 'maven'
     }
 
-    environment{
-       ArtifactId = readMavenPom().getArtifactId()
-       Version = readMavenPom().getVersion()
-       Name = readMavenPom().getName()
-       GroupId = readMavenPom().getGroupId()
-    }
     stages {
         // Specify various stage with in stages
 
@@ -29,58 +23,12 @@ pipeline{
             }
         }
 
-        // Stage3 : Publish the artifacts to Nexus
-        stage ('Publish to Nexus'){
+        // Stage3 : Deploying
+        stage ('Deploying'){ 
             steps {
-
-             script {
-
-                def NexusRepo = Version.endsWith("SNAPSHOT") ? "MyLab-SNAPSHOT" : "MyLab-RELEASE"
-
-                nexusArtifactUploader artifacts: 
-                [[artifactId: "${ArtifactId}" , 
-                classifier: '', 
-                file: "target/${ArtifactId}-${Version}.war", 
-                type: 'war']], 
-                credentialsId: 'ab633a4f-3eec-4d37-868d-3acb372c2062', 
-                groupId: "${GroupId}", 
-                nexusUrl: '172.20.10.84:8081', 
-                nexusVersion: 'nexus3', 
-                protocol: 'http', 
-                repository: "${NexusRepo}", 
-                version: "${Version}"
-
-               }        
+                echo ' deploying......'
             }
         }
-
-        // Stage 4 : Print some information
-        stage ('Print Environment variables'){
-                    steps {
-                        echo "Artifact ID is '${ArtifactId}'"
-                        echo "Version is '${Version}'"
-                        echo "GroupID is '${GroupId}'"
-                        echo "Name is '${Name}'"
-                    }
-                }
-
-        // Stage 5 : Deploying the build artifact to Apache Tomcat
-        stage ('Deploy to Tomcat'){
-            steps {
-                echo "Deploying to Tomcat...."         
-            }
-        }
-
-    // Stage 6 : Deploying the build artifact to Docker
-        stage ('Deploy to Docker'){
-            steps {    
-                echo "Deploying to Docker ...."
-            }
-        }
-
-
-
-
     }
-
 }
+
