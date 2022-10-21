@@ -31,39 +31,35 @@ pipeline{
         }
 
         
-        
-        // Stage3 : Publish Artifacts to Nexus       
-//        stage ('Publish to Nexus'){
-//            steps {
-//                nexusArtifactUploader artifacts: [[artifactId: 'VinayDevOpsLab', classifier: '', file: 'target/VinayDevOpsLab-0.0.1-SNAPSHOT.war', type: 'war']], credentialsId:'3b015235-520c-4cf7-9ebe-42569b501604', groupId: 
-//'com.vinaysdevopslab', nexusUrl: '172.20.10.141:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'MyLab-SNAPSHOT', version:    
-//'0.0.1-SNAPSHOT'
-//            }
-//        }
-
-
-
 
 
         // Stage3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus'){
             steps {
 
+             script {
+
+                def NexusRepo = Version.endsWith("SNAPSHOT") ? "MyLab-SNAPSHOT" : "MyLab-RELEASE"
+
                 nexusArtifactUploader artifacts: 
                 [[artifactId: "${ArtifactId}" , 
                 classifier: '', 
                 file: "target/${ArtifactId}-${Version}.war", 
                 type: 'war']], 
-                credentialsId: '3b015235-520c-4cf7-9ebe-42569b501604', 
+                credentialsId: '3b015235-520c-4cf7-9ebe-42569b501604',
                 groupId: "${GroupId}", 
-                nexusUrl: '172.20.10.141:8081', 
+                nexusUrl: '172.20.10.141:8081',
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
-                repository: 'MyLab-SNAPSHOT', 
+                repository: "${NexusRepo}", 
                 version: "${Version}"
-        
+
+               }        
             }
         }
+
+
+
 
 
         // Stage 4 : Print some information
@@ -79,7 +75,7 @@ pipeline{
 
 
        // Stage5 : Deploying to Tomcat
-        stage ('Deploy to tomcat'){
+        stage ('Deploy to Tomcat'){
             steps {
                 echo ' deploying to Toomcat...'
     
