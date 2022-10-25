@@ -26,7 +26,7 @@ pipeline{
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
-                                execCommand: 'docker run --rm -v "/home/ansibleadmin:/pwd" trufflesecurity/trufflehog:latest --json-legacy --no-verification github --repo http://github.com/r6m0l4/MyLab.git > /home/ansibleadmin/hog_results.json',
+                                execCommand: 'docker run --rm -v "/home/ansibleadmin:/pwd" trufflesecurity/trufflehog:latest --json-legacy --no-verification github --repo http://github.com/r6m0l4/MyLab.git > /home/ansibleadmin/hog_results_%BUILD_NUMBER%.json',
                                 //execCommand: 'uname -a > /home/ansibleadmin/uname.txt',
                                 execTimeout: 300000
                         )
