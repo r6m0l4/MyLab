@@ -15,7 +15,35 @@ pipeline{
     stages {
         // Specify various stage with in stages
 
-        // stage 1. Build
+
+       // stage 1.0 Secrets Scan
+        stage ('Secrets Scan'){
+            steps {
+                echo "Scanning github repo for secrets ...."
+                sshPublisher(publishers:
+                [sshPublisherDesc(
+                    configName: 'sectools_server',
+                    transfers: [
+                        sshTransfer(
+                                cleanRemote: false,
+                                execCommand: 'docker run -it -v "$(pwd):/pwd" trufflesecurity/trufflehog:latest --json-legacy --fail --no-verification github --repo http://github.com/r6m0l4/MyLab.git > hog_results.json',
+                                execTimeout: 300000
+                        )
+                    ],
+                    usePromotionTimestamp: false,
+                    useWorkspaceInPromotion: false,
+                    verbose: false)
+                    ])
+                
+            }
+        }
+
+
+
+
+
+
+        // stage 1.5 Build
         stage ('Build'){
             steps {
                 sh 'mvn clean install package'
