@@ -144,7 +144,7 @@ pipeline{
 
 
       // stage 5.5 ZAP DAST Baseline Scan
-        stage ('Secrets Scan'){
+        stage ('ZAP DAST Baseline Scan'){
             steps {
                 echo " Performing ZAP DAST baseline scan ...."
                 sshPublisher(publishers:
@@ -164,7 +164,6 @@ pipeline{
                 
             }
         }
-
 
 
 
