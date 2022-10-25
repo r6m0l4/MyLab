@@ -30,12 +30,12 @@ pipeline{
                                 execTimeout: 300000
                         )
                     ],
-                    continueOnError : true,
-                    failOnError : true,
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
-                    verbose: true)
-                    ])
+                    verbose: true),
+                continueOnError : true,
+                failOnError : true
+                ])
                 
             }
         }
