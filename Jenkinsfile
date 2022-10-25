@@ -153,7 +153,7 @@ pipeline{
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
-                                execCommand: 'docker run --rm -v $(pwd):/zap/wrk/:rw -p 8080:8080  -i owasp/zap2docker-stable zap-baseline.py -t http://172.20.10.247:8080/latest -g gen.conf -r zap_baseline_report_${BUILD_NUMBER}.html',
+                                execCommand: 'docker run --rm -v "$(pwd):/zap/wrk/:rw" -p 8080:8080  -i owasp/zap2docker-stable zap-baseline.py -t ${TOMCAT_TEST_URL} -g gen.conf -r /zap/wrk/zap_baseline_report_${BUILD_NUMBER}.html',
                                 execTimeout: 500000
                         )
                     ],
