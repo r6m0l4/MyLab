@@ -143,6 +143,31 @@ pipeline{
 
 
 
+      // stage 5.5 ZAP DAST Baseline Scan
+        stage ('Secrets Scan'){
+            steps {
+                echo " Performing ZAP DAST baseline scan ...."
+                sshPublisher(publishers:
+                [sshPublisherDesc(
+                    configName: 'sectools_server',
+                    transfers: [
+                        sshTransfer(
+                                cleanRemote: false,
+                                execCommand: 'docker run --rm -v $(pwd):/zap/wrk/:rw -p 8080:8080  -i owasp/zap2docker-stable zap-baseline.py -t http://172.20.10.247:8080/latest -g gen.conf -r /home/ansibleadmin/zap_baseline_report_${BUILD_NUMBER}.html',
+                                execTimeout: 500000
+                        )
+                    ],
+                    usePromotionTimestamp: false,
+                    useWorkspaceInPromotion: false,
+                    verbose: true)
+                    ])
+                
+            }
+        }
+
+
+
+
 
        // Stage 6 : Deploying the build artifact to Docker
         stage ('Deploy to Docker'){
