@@ -93,7 +93,7 @@ pipeline{
 
 
         // Stage3.1 : Publish the source code to Sonarqube
-        stage ('Sonarqube Analysis'){
+        stage ('Sonarqube SAST Analysis'){
             steps {
                 echo ' Source code published to Sonarqube for SCA......'
                 withSonarQubeEnv('sonarqube'){ // You can override the credential to be used
@@ -153,7 +153,7 @@ pipeline{
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
-                                execCommand: 'docker run --rm -v $(pwd):/zap/wrk/:rw -p 8080:8080  -i owasp/zap2docker-stable zap-baseline.py -t http://172.20.10.247:8080/latest -g gen.conf -r /home/ansibleadmin/zap_baseline_report_${BUILD_NUMBER}.html',
+                                execCommand: 'docker run --rm -v $(pwd):/zap/wrk/:rw -p 8080:8080  -i owasp/zap2docker-stable zap-baseline.py -t http://172.20.10.247:8080/latest -g gen.conf -r zap_baseline_report_${BUILD_NUMBER}.html',
                                 execTimeout: 500000
                         )
                     ],
