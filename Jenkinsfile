@@ -19,7 +19,7 @@ pipeline{
        // stage 1.0 Secrets Scan
         stage ('Secrets Scan'){
             steps {
-                echo "Scanning github repo for secrets ...."
+                echo " Scanning github repo for secrets ...."
                 sshPublisher(publishers:
                 [sshPublisherDesc(
                     configName: 'sectools_server',
@@ -30,12 +30,12 @@ pipeline{
                                 execTimeout: 300000
                         )
                     ],
+                    //continueOnError : true,
+                    //failOnError : true,
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
-                    verbose: true),
-                continueOnError : true,
-                failOnError : true
-                ])
+                    verbose: true)
+                    ])
                 
             }
         }
