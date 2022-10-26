@@ -38,7 +38,7 @@ pipeline{
         stage ('SSH Agent Test'){
                     steps {
                         echo " Testing SSH connecting to remote server ...."
-                        sshagent(credentials: ['6a05874a-391b-4fd9-8d36-72f9d93fac8c']) {
+                        sshagent(credentials: ['sectools_key']) {
                             sh '''
                             ssh ansibleadmin@172.20.10.139 "touch /home/ansibleadmin/ssh-agent_test.txt"
                             '''
