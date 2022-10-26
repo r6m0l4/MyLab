@@ -34,12 +34,12 @@ pipeline{
                 }
 
 
-       // Stage 0.1 : Test SSH Agent
+       // Stage 0.1 : Test SSH Agent to Sectools
         stage ('SSH Agent Test'){
                     steps {
                         echo " Testing SSH connecting to remote server ...."
                         sshagent(credentials: ['sectools_key']) {
-                            sh 'ssh -o StrictHostKeyChecking=no ansibleadmin@${SECTOOLS_IP} touch /home/ansibleadmin/ssh-agent_test_${BUILD_TAG}.txt'
+                            sh 'ssh -o StrictHostKeyChecking=no ansibleadmin@${SECTOOLS_IP} touch /home/ansibleadmin/ssh-agent_test_${BUILD_TAG}.check'
                             }
                     }
                 }
@@ -94,6 +94,18 @@ pipeline{
 
 
         }
+
+
+
+       // Stage 1.1 : Copy results to Jenkins Workspace
+        stage ('Retrieve Secrets Report'){
+                    steps {
+                        echo " Copying report from remote server to Jenkins project workspace ...."
+                        sshagent(credentials: ['sectools_key']) {
+                            sh 'scp -o StrictHostKeyChecking=no ansibleadmin@${SECTOOLS_IP}:/home/ansibleadmin/hog_results_${BUILD_TAG}.json ${WORKSPACE}/target/'
+                            }
+                    }
+                }
 
 
 
