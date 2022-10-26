@@ -39,12 +39,12 @@ pipeline{
                     steps {
                         echo " Testing SSH connecting to remote server ...."
                         sshagent(credentials: ['sectools']) {
-                        sh '''
-                        ssh ansibleadmin@172.20.10.139 "touch /home/ansibleadmin/ssh-agent_test.txt"
-                        '''
+                            sh '''
+                            ssh ansibleadmin@172.20.10.139 "touch /home/ansibleadmin/ssh-agent_test.txt"
+                            '''
+                            }
                     }
                 }
-
 
 
 
