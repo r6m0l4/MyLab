@@ -77,6 +77,7 @@ pipeline{
                 failure {
                     script{
                         echo "scan results failed"
+                        currentBuild.result = 'FAILURE'
                         //sh "exit 1"
                         ////or
                         //error "Failed, exiting now..."
@@ -86,7 +87,8 @@ pipeline{
                     script{
                         echo "scan results unstable"
                         //exit 2 == unstable
-                        sh "exit 2"
+                        currentBuild.result = 'UNSTABLE'
+                        //sh "exit 2"
                         ////or
                         //error "Unstable, exiting now..."              
                      }
