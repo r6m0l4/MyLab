@@ -16,6 +16,22 @@ pipeline{
         // Specify various stage with in stages
 
 
+        // Stage 0 : Print some information
+        stage ('Print Environment variables'){
+                    steps {
+                        echo "Artifact ID is '${ArtifactId}'"
+                        echo "Version is '${Version}'"
+                        echo "GroupID is '${GroupId}'"
+                        echo "Name is '${Name}'"
+                        echo "Workspace is '${WORKSPACE}'"
+                        echo "Working directory is '(pwd())'"
+
+                    }
+                }
+
+
+
+
        // stage 1.0 Secrets Scan
         stage ('Secrets Scan'){
             steps {
@@ -26,7 +42,7 @@ pipeline{
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
-                                execCommand: 'docker run --rm -v "/home/ansibleadmin:/pwd" trufflesecurity/trufflehog:latest --json-legacy --no-verification github --repo ${REPO_URL} > /home/ansibleadmin/hog_results_${BUILD_NUMBER}.json',
+                                execCommand: 'docker run --rm -v "/home/ansibleadmin:/pwd" trufflesecurity/trufflehog:latest --fail --json-legacy --no-verification github --repo ${REPO_URL} > /home/ansibleadmin/hog_results_${BUILD_NUMBER}.json',
                                 execTimeout: 300000
                         )
                     ],
@@ -109,7 +125,7 @@ pipeline{
 
 
 
-        // Stage3.1 : Publish the source code to Sonarqube
+        // Stage4 : Publish the source code to Sonarqube
         stage ('Sonarqube SAST Analysis'){
             steps {
                 echo ' Source code published to Sonarqube for SCA......'
@@ -122,16 +138,6 @@ pipeline{
 
 
 
-
-        // Stage 4 : Print some information
-        stage ('Print Environment variables'){
-                    steps {
-                        echo "Artifact ID is '${ArtifactId}'"
-                        echo "Version is '${Version}'"
-                        echo "GroupID is '${GroupId}'"
-                        echo "Name is '${Name}'"
-                    }
-                }
 
 
 
