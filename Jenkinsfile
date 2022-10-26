@@ -140,9 +140,37 @@ pipeline{
                 odcInstallation: 'OWASP-Dependancy-Check'
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
-        }     
+  
+
+            //Determine action based on scan results
+            post{
+                success {
+                    echo "exit 0 - No issues found, keep going"
+                }
+                failure {
+                    script{
+                        echo "scan results failed"
+                        //currentBuild.result = 'FAILURE'
+                        //sh "exit 1"
+                        ////or
+                        //error "Failed, exiting now..."
+                    }
+                }
+                unstable {
+                    script{
+                        echo "scan results unstable"
+                        unstable('Vuls detected')
+                        //exit 2 == unstable
+                        //currentBuild.result = 'UNSTABLE'
+                        //sh "exit 2"
+                        ////or
+                        //error "Unstable, exiting now..."              
+                     }
+                }
+            }
 
 
+        }   
 
 
 
