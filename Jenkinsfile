@@ -39,7 +39,7 @@ pipeline{
                     ])
                 
             }
-            
+
             post{
                 success {
                 }
@@ -59,6 +59,7 @@ pipeline{
                           error "Unstable, exiting now..."                    
                      }
                 }
+            }
 
 
         }
