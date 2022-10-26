@@ -226,6 +226,7 @@ pipeline{
                 sshPublisher(publishers: 
                 [sshPublisherDesc(
                     configName: 'ansible_controller', 
+                    continueOnError: true,
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
@@ -251,6 +252,7 @@ pipeline{
                 sshPublisher(publishers:
                 [sshPublisherDesc(
                     configName: 'sectools_server',
+                    continueOnError: true,
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
@@ -260,8 +262,7 @@ pipeline{
                     ],
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
-                    verbose: true),
-                    continueOnError: true
+                    verbose: true)
                     ])
                 
             }
@@ -292,6 +293,7 @@ pipeline{
                 sshPublisher(publishers: 
                 [sshPublisherDesc(
                     configName: 'ansible_controller', 
+                    continueOnError: true,
                     transfers: [
                         sshTransfer(
                                 cleanRemote:false,
@@ -301,8 +303,7 @@ pipeline{
                     ], 
                     usePromotionTimestamp: false, 
                     useWorkspaceInPromotion: false, 
-                    verbose: false),
-                    continueOnError: true
+                    verbose: false)
                     ])
             
             }
