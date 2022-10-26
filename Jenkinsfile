@@ -108,6 +108,21 @@ pipeline{
                 }
 
 
+        // Stage 1.5 Dependancy Check Scan
+        stage ('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                echo " Performing dependancy checks ...."
+                dependencyCheck additionalArguments: ''' 
+                    -o "./" 
+                    -s "./"
+                    -f "ALL" 
+                    --prettyPrint''', 
+                odcInstallation: 'OWASP-Dependancy-Check',
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }     
+
+
 
 
 
@@ -252,11 +267,6 @@ pipeline{
             
             }
         }
-
-
-
-
-
 
 
 
