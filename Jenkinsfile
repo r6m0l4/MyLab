@@ -86,7 +86,7 @@ pipeline{
                 unstable {
                     script{
                         echo "scan results unstable"
-                        unstable('Vuls detected')
+                        //unstable('Vuls detected')
                         //exit 2 == unstable
                         //currentBuild.result = 'UNSTABLE'
                         //sh "exit 2"
@@ -135,7 +135,7 @@ pipeline{
                     -o "./" 
                     -s "./"
                     -f "ALL"
-                    --failOnCVSS "9" 
+                    --failOnCVSS "10" 
                     --prettyPrint''', 
                 odcInstallation: 'OWASP-Dependancy-Check'
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
@@ -150,7 +150,7 @@ pipeline{
                 failure {
                     script{
                         echo "scan results failed"
-                        unstable('Vuls detected')
+                        //unstable('Vuls detected')
                         //currentBuild.result = 'FAILURE'
                         //sh "exit 1"
                         ////or
@@ -160,7 +160,7 @@ pipeline{
                 unstable {
                     script{
                         echo "scan results unstable"
-                        unstable('Vuls detected')
+                        //unstable('Vuls detected')
                         //exit 2 == unstable
                         //currentBuild.result = 'UNSTABLE'
                         //sh "exit 2"
