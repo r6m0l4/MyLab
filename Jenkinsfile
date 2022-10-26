@@ -219,7 +219,7 @@ pipeline{
 
 
        // Stage 5.6 : Copy results to Jenkins Workspace
-        stage ('Retrieve Secrets Report'){
+        stage ('Retrieve ZAP DAST Report'){
                     steps {
                         echo " Copying report from remote server to Jenkins project workspace ...."
                         sshagent(credentials: ['sectools_key']) {
