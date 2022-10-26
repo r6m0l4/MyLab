@@ -42,6 +42,7 @@ pipeline{
 
             post{
                 success {
+                    echo "exit 0 - keep going"
                 }
                 failure {
                     script{
