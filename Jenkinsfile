@@ -87,7 +87,9 @@ pipeline{
                         echo "scan results unstable"
                         //sh "exit 183"
                         ////or
-                        //error "Unstable, exiting now..."                    
+                        //error "Unstable, exiting now..."
+                        ////or
+                        currentBuild.result = "UNSTABLE"                    
                      }
                 }
             }
@@ -133,7 +135,7 @@ pipeline{
                     -f "ALL" 
                     --prettyPrint''', 
                 odcInstallation: 'OWASP-Dependancy-Check'
-                dependencyCheckPublisher pattern: 'dependency-check-report_${BUILD_TAG}.xml'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }     
 
