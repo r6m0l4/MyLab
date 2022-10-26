@@ -223,10 +223,9 @@ pipeline{
         stage ('Deploy to Tomcat'){
             steps {
                 echo "Deploying to tomcat ...."
-                sshPublisher(publishers: 
+                sshPublisher(continueOnError: true, publishers: 
                 [sshPublisherDesc(
                     configName: 'ansible_controller', 
-                    continueOnError: true,
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
@@ -249,10 +248,9 @@ pipeline{
         stage ('ZAP DAST Baseline Scan'){
             steps {
                 echo " Performing ZAP DAST baseline scan ...."
-                sshPublisher(publishers:
+                sshPublisher(continueOnError: true, publishers:
                 [sshPublisherDesc(
                     configName: 'sectools_server',
-                    continueOnError: true,
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
@@ -290,10 +288,9 @@ pipeline{
         stage ('Deploy to Docker'){
             steps {
                 echo "Deploying to docker ...."
-                sshPublisher(publishers: 
+                sshPublisher(continueOnError: true, publishers: 
                 [sshPublisherDesc(
                     configName: 'ansible_controller', 
-                    continueOnError: true,
                     transfers: [
                         sshTransfer(
                                 cleanRemote:false,
