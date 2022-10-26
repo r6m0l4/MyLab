@@ -217,6 +217,20 @@ pipeline{
 
 
 
+
+       // Stage 5.6 : Copy results to Jenkins Workspace
+        stage ('Retrieve Secrets Report'){
+                    steps {
+                        echo " Copying report from remote server to Jenkins project workspace ...."
+                        sshagent(credentials: ['sectools_key']) {
+                            sh 'scp -o StrictHostKeyChecking=no ansibleadmin@${SECTOOLS_IP}:/home/ansibleadmin/zap_baseline_report_${BUILD_TAG}.html ${WORKSPACE}/zap_baseline_report_${BUILD_TAG}.html'
+                            }
+                    }
+                }
+
+
+
+
        // Stage 6 : Deploying the build artifact to Docker
         stage ('Deploy to Docker'){
             steps {
