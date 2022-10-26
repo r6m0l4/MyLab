@@ -24,8 +24,12 @@ pipeline{
                         echo "GroupID is '${GroupId}'"
                         echo "Name is '${Name}'"
                         echo "Workspace is '${WORKSPACE}'"
-                        echo "Working directory is '(pwd())'"
-
+                        echo "Jenkins home is '${JENKINS_HOME}'"
+                        echo "Repo URL is '${REPO_URL}'"
+                        echo "Job name is '${JOB_NAME}'"
+                        echo "Job base name is '${JOB_BASE_NAME}'"
+                        echo "Build number is '${BUILD_NUMBER}'"
+                        echo "Build tag is '${BUILD_TAG}'"
                     }
                 }
 
