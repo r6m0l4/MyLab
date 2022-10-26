@@ -76,6 +76,7 @@ pipeline{
                 failure {
                     script{
                         echo "scan results failed"
+                        unstable('Vuls detected')
                         //currentBuild.result = 'FAILURE'
                         //sh "exit 1"
                         ////or
@@ -85,7 +86,7 @@ pipeline{
                 unstable {
                     script{
                         echo "scan results unstable"
-                        //unstable('Vuls detected')
+                        unstable('Vuls detected')
                         //exit 2 == unstable
                         //currentBuild.result = 'UNSTABLE'
                         //sh "exit 2"
@@ -152,7 +153,7 @@ pipeline{
 
 
         // Stage4 : Publish the source code to Sonarqube
-        stage ('Sonarqube SAST Analysis'){
+        stage ('Sonarqube SAST'){
             steps {
                 echo ' Source code published to Sonarqube for SCA......'
                 withSonarQubeEnv('sonarqube'){ // You can override the credential to be used
@@ -193,7 +194,7 @@ pipeline{
 
 
       // stage 6 ZAP DAST Baseline Scan
-        stage ('ZAP DAST Baseline Scan'){
+        stage ('ZAP DAST Baseline'){
             steps {
                 echo " Performing ZAP DAST baseline scan ...."
                 sshPublisher(continueOnError: true, publishers:
@@ -312,7 +313,7 @@ pipeline{
 /*
 
       // stage 7 ZAP DAST Full Scan
-        stage ('ZAP DAST Full Scan'){
+        stage ('ZAP DAST Full'){
             steps {
                 echo " Performing ZAP DAST full scan ...."
                 sshPublisher(publishers:
