@@ -134,7 +134,8 @@ pipeline{
                 dependencyCheck additionalArguments: ''' 
                     -o "./" 
                     -s "./"
-                    -f "ALL" 
+                    -f "ALL"
+                    --failOnCVSS "9" 
                     --prettyPrint''', 
                 odcInstallation: 'OWASP-Dependancy-Check'
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
