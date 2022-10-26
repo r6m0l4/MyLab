@@ -193,6 +193,34 @@ pipeline{
 
 
 
+
+      // stage 7 ZAP DAST Full Scan
+        stage ('ZAP DAST Full Scan'){
+            steps {
+                echo " Performing ZAP DAST full scan ...."
+                sshPublisher(publishers:
+                [sshPublisherDesc(
+                    configName: 'sectools_server',
+                    transfers: [
+                        sshTransfer(
+                                cleanRemote: false,
+                                execCommand: 'docker run --rm -v "$(pwd):/zap/wrk/:rw" -p 8080:8080  --user root -i owasp/zap2docker-stable zap-full-scan.py -t ${TOMCAT_TEST_URL} -g gen.conf -r /zap/wrk/zap_full_report_${BUILD_NUMBER}.html',
+                                execTimeout: 1000000
+                        )
+                    ],
+                    usePromotionTimestamp: false,
+                    useWorkspaceInPromotion: false,
+                    verbose: true)
+                    ])
+                
+            }
+        }
+
+
+
+
+
+
          
     }    
          
