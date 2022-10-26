@@ -39,9 +39,7 @@ pipeline{
                     steps {
                         echo " Testing SSH connecting to remote server ...."
                         sshagent(credentials: ['sectools_key']) {
-                            sh '''
-                            ssh ansibleadmin@172.20.10.139 "touch /home/ansibleadmin/ssh-agent_test.txt"
-                            '''
+                            sh 'ssh -o StrictHostKeyChecking=no ansibleadmin@172.20.10.139 touch /home/ansibleadmin/ssh-agent_test.txt'
                             }
                     }
                 }
