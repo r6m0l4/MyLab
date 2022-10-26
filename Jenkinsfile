@@ -50,8 +50,6 @@ pipeline{
                         error "Failed, exiting now..."
                     }
                 }
-                aborted {
-                }
                 unstable {
                     script{
                            sh "exit 1"
