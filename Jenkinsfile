@@ -150,6 +150,7 @@ pipeline{
                 failure {
                     script{
                         echo "scan results failed"
+                        unstable('Vuls detected')
                         //currentBuild.result = 'FAILURE'
                         //sh "exit 1"
                         ////or
@@ -273,6 +274,7 @@ pipeline{
         stage ('Retrieve ZAP DAST Report'){
                     steps {
                         echo " Copying report from remote server to Jenkins project workspace ...."
+                        sleep(time:10,unit:"SECONDS")
                         sshagent(credentials: ['sectools_key']) {
                             sh 'scp -o StrictHostKeyChecking=no ansibleadmin@${SECTOOLS_IP}:/home/ansibleadmin/zap_baseline_report_${BUILD_TAG}.html ${WORKSPACE}/zap_baseline_report_${BUILD_TAG}.html'
                             }
