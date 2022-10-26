@@ -260,7 +260,8 @@ pipeline{
                     ],
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
-                    verbose: true)
+                    verbose: true),
+                    continueOnError: true
                     ])
                 
             }
@@ -300,7 +301,8 @@ pipeline{
                     ], 
                     usePromotionTimestamp: false, 
                     useWorkspaceInPromotion: false, 
-                    verbose: false)
+                    verbose: false),
+                    continueOnError: true
                     ])
             
             }
