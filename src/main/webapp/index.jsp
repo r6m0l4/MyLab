@@ -52,7 +52,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Hello</h1>
-        <p>This is Ricks DevOps AWS Lab - RELEASE 21Oct2022 16:24 (Sonarqube Scan)
+        <p>This is Ricks DevSecOps Pipeline - RELEASE 26Oct2022 14:57
 </p>
         <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
         <p><a class="btn btn-primary btn-lg" role="button">Success!! more &raquo;</a></p>

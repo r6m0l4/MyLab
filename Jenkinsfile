@@ -46,6 +46,7 @@ pipeline{
 
 
 
+
        // stage 1.0 Secrets Scan
         stage ('Secrets Scan'){
             steps {
@@ -60,8 +61,6 @@ pipeline{
                                 execTimeout: 300000
                         )
                     ],
-                    //continueOnError : true,
-                    //failOnError : true,
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
                     verbose: true)
@@ -120,68 +119,19 @@ pipeline{
         // stage 2 Build
         stage ('Build'){
             steps {
+                echo " Building application ...."
                 sh 'mvn clean install package'
             }
         }
 
      
-        
-
-        // Stage 2.5 Dependancy Check (only fail on CVSS == 10  --failOnCVSS "10")
-        stage ('Dependency Check') {
-            steps {
-                echo " Performing OWASP Dependancy Check scan on workspace ...."
-                dependencyCheck additionalArguments: ''' 
-                    -o "./" 
-                    -s "./"
-                    -f "ALL" 
-                    --prettyPrint''', 
-                odcInstallation: 'OWASP-Dependancy-Check'
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-            }
-  
-
-            //Determine action based on scan results
-            post{
-                success {
-                    echo "exit 0 - No issues found, keep going"
-                }
-                failure {
-                    script{
-                        echo "scan results failed"
-                        unstable('Vuls detected')
-                        //currentBuild.result = 'FAILURE'
-                        //sh "exit 1"
-                        ////or
-                        //error "Failed, exiting now..."
-                    }
-                }
-                unstable {
-                    script{
-                        echo "scan results unstable"
-                        unstable('Vuls detected')
-                        //exit 2 == unstable
-                        //currentBuild.result = 'UNSTABLE'
-                        //sh "exit 2"
-                        ////or
-                        //error "Unstable, exiting now..."              
-                     }
-                }
-            }
-
-
-        }   
-
 
 
         // Stage3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus'){
             steps {
-
              script {
-
                 def NexusRepo = Version.endsWith("SNAPSHOT") ? "MyLab-SNAPSHOT" : "MyLab-RELEASE"
-
                 nexusArtifactUploader artifacts: 
                 [[artifactId: "${ArtifactId}" , 
                 classifier: '', 
@@ -194,7 +144,6 @@ pipeline{
                 protocol: 'http', 
                 repository: "${NexusRepo}", 
                 version: "${Version}"
-
                }        
             }
         }
@@ -243,7 +192,7 @@ pipeline{
 
 
 
-      // stage 5.5 ZAP DAST Baseline Scan
+      // stage 6 ZAP DAST Baseline Scan
         stage ('ZAP DAST Baseline Scan'){
             steps {
                 echo " Performing ZAP DAST baseline scan ...."
@@ -269,7 +218,7 @@ pipeline{
 
 
 
-       // Stage 5.6 : Copy results to Jenkins Workspace
+       // Stage 7 : Copy results to Jenkins Workspace
         stage ('Retrieve ZAP DAST Report'){
                     steps {
                         echo " Copying report from remote server to Jenkins project workspace ...."
@@ -283,7 +232,60 @@ pipeline{
 
 
 
-       // Stage 6 : Deploying the build artifact to Docker
+        
+
+        // Stage 8 : Dependancy Check (only fail on CVSS == 10  --failOnCVSS "10")
+        stage ('Dependency Check') {
+            steps {
+                echo " Performing OWASP Dependancy Check scan on workspace ...."
+                dependencyCheck additionalArguments: ''' 
+                    -o "./" 
+                    -s "./"
+                    -f "ALL" 
+                    --prettyPrint''', 
+                odcInstallation: 'OWASP-Dependancy-Check'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+  
+
+            //Determine action based on scan results
+            post{
+                success {
+                    echo "exit 0 - No issues found, keep going"
+                }
+                failure {
+                    script{
+                        echo "scan results failed"
+                        unstable('Vuls detected')
+                        //currentBuild.result = 'FAILURE'
+                        //sh "exit 1"
+                        ////or
+                        //error "Failed, exiting now..."
+                    }
+                }
+                unstable {
+                    script{
+                        echo "scan results unstable"
+                        unstable('Vuls detected')
+                        //exit 2 == unstable
+                        //currentBuild.result = 'UNSTABLE'
+                        //sh "exit 2"
+                        ////or
+                        //error "Unstable, exiting now..."              
+                     }
+                }
+            }
+
+
+        }   
+
+
+
+
+
+
+
+       // Stage 9 : Deploying the build artifact to Docker
         stage ('Deploy to Docker'){
             steps {
                 echo "Deploying to docker ...."
