@@ -102,7 +102,7 @@ pipeline{
                     steps {
                         echo " Copying report from remote server to Jenkins project workspace ...."
                         sshagent(credentials: ['sectools_key']) {
-                            sh 'scp -o StrictHostKeyChecking=no ansibleadmin@${SECTOOLS_IP}:/home/ansibleadmin/hog_results_${BUILD_TAG}.json ${WORKSPACE}/target/'
+                            sh 'scp -o StrictHostKeyChecking=no ansibleadmin@${SECTOOLS_IP}:/home/ansibleadmin/hog_results_${BUILD_TAG}.json ${WORKSPACE}/hog_results_${BUILD_TAG}.json'
                             }
                     }
                 }
