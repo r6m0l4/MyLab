@@ -108,20 +108,6 @@ pipeline{
                 }
 
 
-        // Stage 1.5 Dependancy Check Scan
-        stage ('OWASP Dependency-Check Vulnerabilities') {
-            steps {
-                echo " Performing dependancy checks ...."
-                dependencyCheck additionalArguments: ''' 
-                    -o "./" 
-                    -s "./"
-                    -f "ALL" 
-                    --prettyPrint''', 
-                odcInstallation: 'OWASP-Dependancy-Check'
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-            }
-        }     
-
 
 
 
@@ -136,6 +122,23 @@ pipeline{
 
      
         
+
+        // Stage 2.5 Dependancy Check
+        stage ('OWASP Dependency-Check') {
+            steps {
+                echo " Performing dependancy checks ...."
+                dependencyCheck additionalArguments: ''' 
+                    -o "./" 
+                    -s "./"
+                    -f "ALL" 
+                    --prettyPrint''', 
+                odcInstallation: 'OWASP-Dependancy-Check'
+                dependencyCheckPublisher pattern: 'dependency-check-report_${BUILD_TAG}.xml'
+            }
+        }     
+
+
+
 
 
         // Stage3 : Publish the artifacts to Nexus
