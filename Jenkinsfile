@@ -254,7 +254,7 @@ pipeline{
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
-                                execCommand: 'docker run --rm -v "$(pwd):/zap/wrk/:rw" -p 8080:8080  --user root -i owasp/zap2docker-stable zap-baseline.py -t ${TOMCAT_TEST_URL} -g gen.conf -r /zap/wrk/zap_baseline_report_${BUILD_TAG}.html',
+                                execCommand: 'sudo docker run --rm -v "$(pwd):/zap/wrk/:rw" -p 8080:8080  --user root -i owasp/zap2docker-stable zap-baseline.py -t ${TOMCAT_TEST_URL} -g gen.conf -r /zap/wrk/zap_baseline_report_${BUILD_TAG}.html',
                                 execTimeout: 500000
                         )
                     ],
@@ -320,7 +320,7 @@ pipeline{
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
-                                execCommand: 'docker run --rm -v "$(pwd):/zap/wrk/:rw" -p 8080:8080  --user root -i owasp/zap2docker-stable zap-full-scan.py -t ${TOMCAT_TEST_URL} -g gen.conf -r /zap/wrk/zap_full_report_${BUILD_TAG}.html',
+                                execCommand: 'sudo docker run --rm -v "$(pwd):/zap/wrk/:rw" -p 8080:8080  --user root -i owasp/zap2docker-stable zap-full-scan.py -t ${TOMCAT_TEST_URL} -g gen.conf -r /zap/wrk/zap_full_report_${BUILD_TAG}.html',
                                 execTimeout: 1000000
                         )
                     ],
