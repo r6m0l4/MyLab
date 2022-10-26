@@ -40,22 +40,25 @@ pipeline{
                 
             }
 
+            //Determine action based on scan results
             post{
                 success {
-                    echo "exit 0 - keep going"
+                    echo "exit 0 - No issues found, keep going"
                 }
                 failure {
                     script{
-                        sh "exit 1"
+                        echo "scan results failed"
+                        //sh "exit 1"
                         //or
-                        error "Failed, exiting now..."
+                        //error "Failed, exiting now..."
                     }
                 }
                 unstable {
                     script{
-                           sh "exit 1"
-                          //or
-                          error "Unstable, exiting now..."                    
+                        echo "scan results failed"
+                        //sh "exit 1"
+                        //or
+                        //error "Unstable, exiting now..."                    
                      }
                 }
             }
