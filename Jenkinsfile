@@ -86,7 +86,6 @@ pipeline{
                 unstable {
                     script{
                         echo "scan results unstable"
-                        warnError('Vuls detected')
                         unstable('Vuls detected')
                         //exit 2 == unstable
                         //currentBuild.result = 'UNSTABLE'
