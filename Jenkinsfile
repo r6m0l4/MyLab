@@ -26,8 +26,7 @@ pipeline{
                     transfers: [
                         sshTransfer(
                                 cleanRemote: false,
-                                //execCommand: 'docker run --rm -v "/home/ansibleadmin:/pwd" trufflesecurity/trufflehog:latest --fail --json-legacy --no-verification github --repo http://github.com/r6m0l4/MyLab.git > /home/ansibleadmin/hog_results_${BUILD_NUMBER}.json',
-                                execCommand: 'docker run --rm -v "/home/ansibleadmin:/pwd" trufflesecurity/trufflehog:latest --fail --json-legacy --no-verification github --repo ${REPO_URL} > /home/ansibleadmin/hog_results_${BUILD_NUMBER}.json',
+                                execCommand: 'docker run --rm -v "/home/ansibleadmin:/pwd" trufflesecurity/trufflehog:latest --json-legacy --no-verification github --repo ${REPO_URL} > /home/ansibleadmin/hog_results_${BUILD_NUMBER}.json',
                                 execTimeout: 300000
                         )
                     ],
@@ -49,7 +48,7 @@ pipeline{
                     script{
                         echo "scan results failed"
                         //sh "exit 1"
-                        //or
+                        ////or
                         //error "Failed, exiting now..."
                     }
                 }
@@ -57,7 +56,7 @@ pipeline{
                     script{
                         echo "scan results failed"
                         //sh "exit 1"
-                        //or
+                        ////or
                         //error "Unstable, exiting now..."                    
                      }
                 }
