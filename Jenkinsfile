@@ -127,7 +127,7 @@ pipeline{
      
         
 
-        // Stage 2.5 Dependancy Check
+        // Stage 2.5 Dependancy Check (only fail on CVSS == 10)
         stage ('Dependency Check') {
             steps {
                 echo " Performing OWASP Dependancy Check scan on workspace ...."
@@ -150,7 +150,7 @@ pipeline{
                 failure {
                     script{
                         echo "scan results failed"
-                        //unstable('Vuls detected')
+                        unstable('Vuls detected')
                         //currentBuild.result = 'FAILURE'
                         //sh "exit 1"
                         ////or
@@ -160,7 +160,7 @@ pipeline{
                 unstable {
                     script{
                         echo "scan results unstable"
-                        //unstable('Vuls detected')
+                        unstable('Vuls detected')
                         //exit 2 == unstable
                         //currentBuild.result = 'UNSTABLE'
                         //sh "exit 2"
