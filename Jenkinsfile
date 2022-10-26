@@ -127,15 +127,14 @@ pipeline{
      
         
 
-        // Stage 2.5 Dependancy Check (only fail on CVSS == 10)
+        // Stage 2.5 Dependancy Check (only fail on CVSS == 10  --failOnCVSS "10")
         stage ('Dependency Check') {
             steps {
                 echo " Performing OWASP Dependancy Check scan on workspace ...."
                 dependencyCheck additionalArguments: ''' 
                     -o "./" 
                     -s "./"
-                    -f "ALL"
-                    --failOnCVSS "10" 
+                    -f "ALL" 
                     --prettyPrint''', 
                 odcInstallation: 'OWASP-Dependancy-Check'
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
