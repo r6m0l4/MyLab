@@ -85,6 +85,7 @@ pipeline{
                 unstable {
                     script{
                         echo "scan results unstable"
+                        //exit 2 == unstable
                         sh "exit 2"
                         ////or
                         //error "Unstable, exiting now..."              
