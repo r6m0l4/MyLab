@@ -39,6 +39,28 @@ pipeline{
                     ])
                 
             }
+            
+            post{
+                success {
+                }
+                failure {
+                    script{
+                        sh "exit 1"
+                        //or
+                        error "Failed, exiting now..."
+                    }
+                }
+                aborted {
+                }
+                unstable {
+                    script{
+                           sh "exit 1"
+                          //or
+                          error "Unstable, exiting now..."                    
+                     }
+                }
+
+
         }
 
 
@@ -46,21 +68,14 @@ pipeline{
 
 
 
-        // stage 1.5 Build
+        // stage 2 Build
         stage ('Build'){
             steps {
                 sh 'mvn clean install package'
             }
         }
 
-        // Stage2 : Testing
-        stage ('Test'){
-            steps {
-                echo ' testing......'
-
-            }
-        }
-
+     
         
 
 
@@ -194,6 +209,11 @@ pipeline{
 
 
 
+
+
+
+/*
+
       // stage 7 ZAP DAST Full Scan
         stage ('ZAP DAST Full Scan'){
             steps {
@@ -215,6 +235,8 @@ pipeline{
                 
             }
         }
+
+*/
 
 
 
