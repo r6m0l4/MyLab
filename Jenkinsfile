@@ -85,11 +85,9 @@ pipeline{
                 unstable {
                     script{
                         echo "scan results unstable"
-                        //sh "exit 183"
+                        sh "exit 2"
                         ////or
-                        //error "Unstable, exiting now..."
-                        ////or
-                        currentBuild.result = "UNSTABLE"                    
+                        //error "Unstable, exiting now..."              
                      }
                 }
             }
