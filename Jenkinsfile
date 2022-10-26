@@ -84,8 +84,8 @@ pipeline{
                 }
                 unstable {
                     script{
-                        echo "scan results failed"
-                        //sh "exit 1"
+                        echo "scan results unstable"
+                        sh "exit 183"
                         ////or
                         //error "Unstable, exiting now..."                    
                      }
@@ -124,9 +124,9 @@ pipeline{
         
 
         // Stage 2.5 Dependancy Check
-        stage ('OWASP Dependency-Check') {
+        stage ('Dependency Check') {
             steps {
-                echo " Performing dependancy checks ...."
+                echo " Performing OWASP Dependancy Check scan on workspace ...."
                 dependencyCheck additionalArguments: ''' 
                     -o "./" 
                     -s "./"
